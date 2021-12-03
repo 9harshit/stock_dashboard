@@ -11,8 +11,9 @@ from apps import currency_tracker, error, price_predictor
 
 SIDEBAR_STYLE = {
     "position": "fixed",
-    "top": 0,
-    "left": 0,
+    "top": "8%",
+    "left": "2rem",
+    # "height": "15%",
     "width": "100%",
     "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
@@ -23,21 +24,25 @@ app.layout = html.Div(
         # location will help us to know which page we are on. It is the input of the callback (id='url', refresh=False, pathname='/') path name will be populated with href value
         dcc.Location(id="url", refresh=False, pathname="/"),
         html.Div(
+            html.H2("Stock Dashboard", className="display-4"),
+            style={"text-align": "center"},
+        ),
+        # html.Hr(),
+        html.Div(
             [
-                html.H2("Stock Dashboard", className="display-4"),
-                html.Hr(),
                 dbc.Nav(
                     [
                         dbc.NavItem(
                             dbc.NavLink(
                                 "Stock Price Predictor",
-                                active=True,
                                 href="/apps/price_predictor",
+                                active=True,
                             )
                         ),
                         dbc.NavItem(
                             dbc.NavLink(
-                                "Currency Tracker", href="/apps/currency_tracker"
+                                "Currency Tracker",
+                                href="/apps/currency_tracker",
                             )
                         ),
                     ],
@@ -56,9 +61,10 @@ app.layout = html.Div(
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def display_page(pathname):
-    if pathname == "/apps/price_predictor":
+    print(pathname)
+    if pathname in ["/apps/price_predictor", "/"]:
         return price_predictor.layout
-    if pathname == "/apps/currency_tracker":
+    elif pathname == "/apps/currency_tracker":
         return currency_tracker.layout
     else:
         return error.layout
