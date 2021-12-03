@@ -1,10 +1,13 @@
-dash
 dash_bootstrap_components
 dash-renderer
 dash-core-components
 dash-html-components
-plotly
+
 python-3.8
-gunicorn
+gunicorn==20.0.4
 keras
 tensorflow
+numpy==1.19.1
+pandas==1.0.0
+plotly==4.10.0
+dash==1.16.0
