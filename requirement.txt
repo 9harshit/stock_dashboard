@@ -4,6 +4,7 @@ dash-renderer
 dash-core-components
 dash-html-components
 plotly
+python-3.8
 gunicorn
 keras
 tensorflow
