@@ -62,9 +62,9 @@ app.layout = html.Div(
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def display_page(pathname):
     print(pathname)
-    if pathname in ["/apps/price_predictor", "/"]:
+    if pathname in ["/apps/price_predictor"]:
         return price_predictor.layout
-    elif pathname == "/apps/currency_tracker":
+    elif pathname in ["/apps/currency_tracker", "/"]:
         return currency_tracker.layout
     else:
         return error.layout
