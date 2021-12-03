@@ -3,8 +3,6 @@ dash-renderer
 dash-core-components
 dash-html-components
 gunicorn==20.0.4
-keras
-tensorflow
 numpy==1.19.1
 pandas==1.0.0
 plotly==4.10.0
