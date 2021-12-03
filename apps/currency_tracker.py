@@ -8,6 +8,7 @@ import plotly.express as px
 import yfinance as yf
 from dash.dependencies import Input, Output
 from app import app
+from datetime import datetime
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
@@ -27,10 +28,16 @@ COUNTRY = [
 layout = html.Div(
     [
         html.H1("Currency Tracker", style={"textAlign": "center"}),
+        # dcc.Loading(
+        #     id="loading-1",
+        #     children=[html.Div([html.Div(id="loading-output-1")])],
+        #     type="circle",
+        # ),
+        html.Label(id="label", children=[]),
         dcc.Graph(id="map", figure={}),
         dcc.Graph(id="chart", figure={}),
         dcc.Interval(
-            id="interval-component", interval=60000, n_intervals=0  # in milliseconds
+            id="interval-component", interval=600000, n_intervals=0  # in milliseconds
         ),
     ]
 )
@@ -40,6 +47,8 @@ layout = html.Div(
     [
         Output(component_id="map", component_property="figure"),
         Output(component_id="chart", component_property="figure"),
+        # Output("loading-output-1", "children"),
+        Output("label", "children"),
     ],
     Input("interval-component", "n_intervals"),
 )
@@ -52,7 +61,6 @@ def display_value(n_intervals):
     map = map[map["name"].isin(COUNTRY)]
 
     bar_df = pd.DataFrame()
-    print("erer")
 
     for i, ticker in enumerate(
         ["AUD=X", "CAD=X", "EUR=X", "INR=X", "USD", "GBP=X", "RUB=X", "CNY=X"], 0
@@ -68,12 +76,12 @@ def display_value(n_intervals):
             # fetch data by interval (including intraday if period < 60 days)
             # valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo
             # (optional, default is '1d')
-            interval="1m",
+            interval="5m",
         )
         data = data.fillna(method="ffill").reset_index()
         data = data.drop_duplicates()
 
-        data["Country"] = ticker
+        data["Country"] = ticker.split("=")[0]
 
         data = data.loc[:, ["Datetime", "Close", "Country"]].tail(10)
 
@@ -81,7 +89,7 @@ def display_value(n_intervals):
         df.loc[i]["Currency"] = (
             0 if data.iloc[-2]["Close"] > data.iloc[-1]["Close"] else 1
         )
-        df.loc[i]["name"] = ticker.split("=")[0]
+        df.loc[i]["name"] = COUNTRY[i]
 
         bar_df = bar_df.append(data.tail(10))
         bar_df = bar_df.drop_duplicates()
@@ -103,4 +111,4 @@ def display_value(n_intervals):
 
     fig2 = px.line(bar_df, x="Datetime", y="Close", color="Country")
 
-    return fig1, fig2
+    return fig1, fig2, datetime.now().strftime("%m/%d/%Y,%H:%M:%S")
