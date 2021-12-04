@@ -15,7 +15,7 @@ SIDEBAR_STYLE = {
     "left": "2rem",
     # "height": "15%",
     "width": "100%",
-    "padding": "2rem 1rem",
+    # "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
 }
 
@@ -56,7 +56,8 @@ app.layout = html.Div(
         ),
         # This is where the output will be displayed. All the pages will be rendered here by passing in children=[].
         html.Div(id="page-content", children=[]),
-    ]
+    ],
+    style={"width": "95%", "display": "inline-block"},
 )
 
 

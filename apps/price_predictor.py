@@ -1,19 +1,19 @@
 import pathlib
+from datetime import datetime
+from re import T
 
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table as dt
 import pandas as pd
 import plotly.express as px
-import yfinance as yf
 from dash.dependencies import Input, Output
+
 from app import app
-from datetime import datetime
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../datasets").resolve()
-
 
 layout = html.Div(
     [
@@ -32,6 +32,7 @@ layout = html.Div(
         ),
         html.Div(
             dcc.RadioItems(
+                id="input-radio-button",
                 options=[
                     {"label": "RNN", "value": "RNN"},
                     {"label": "Bi-direction RNN", "value": "BRNN"},
@@ -67,12 +68,17 @@ layout = html.Div(
         Output("update_label", "children"),
         Output("loading-2", "children"),
     ],
-    Input("interval-component", "n_intervals"),
+    [Input("interval-component", "n_intervals"), Input("input-radio-button", "value")],
 )
-def display_value(n_intervals):
+def display_value(n_intervals, radio_button_value):
 
     data = pd.read_csv(DATA_PATH.joinpath("apple_5_test.csv"))
     fig = px.line(data, x="Datetime", y="Close")
+
+    # if radio_button_value == "BRNN":
+    #     regressor = load_model(MODEL_PATH.joinpath("biapple1.h5"))
+    # else:
+    #     regressor = load_model(MODEL_PATH.joinpath("apple1.h5"), compile=True)
 
     return (
         fig,

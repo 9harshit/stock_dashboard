@@ -9,7 +9,6 @@ from app import app, server
 # Connect to your app pages
 from apps import currency_tracker, error, price_predictor
 
-
 layout = html.Div(
     [
         html.H1("404 Error", style={"textAlign": "center"}),
