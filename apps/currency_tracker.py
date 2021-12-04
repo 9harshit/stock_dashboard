@@ -28,14 +28,22 @@ COUNTRY = [
 layout = html.Div(
     [
         html.H1("Currency Tracker", style={"textAlign": "center"}),
-        # dcc.Loading(
-        #     id="loading-1",
-        #     children=[html.Div([html.Div(id="loading-output-1")])],
-        #     type="circle",
-        # ),
+        dcc.Loading(
+            id="loading-1",
+            children=[html.Div([html.Div(id="loading-output-1")])],
+            type="graph",
+            fullscreen=True,
+        ),
         html.Label(id="label", children=[]),
-        dcc.Graph(id="map", figure={}),
-        dcc.Graph(id="chart", figure={}),
+        html.Div(
+            [dcc.Graph(id="map", figure={}), dcc.Graph(id="chart", figure={})],
+            style={
+                "display": "flex",
+                "width": "100%",
+                "flex-direction": "row",
+                "justify-content": "center",
+            },
+        ),
         dcc.Interval(
             id="interval-component", interval=300000, n_intervals=0  # in milliseconds
         ),
@@ -47,10 +55,10 @@ layout = html.Div(
     [
         Output(component_id="map", component_property="figure"),
         Output(component_id="chart", component_property="figure"),
-        # Output("loading-output-1", "children"),
+        Output("loading-output-1", "children"),
         Output("label", "children"),
     ],
-    Input("interval-component", "n_intervals"),
+    [Input("interval-component", "n_intervals")],
 )
 def display_value(n_intervals):
 
@@ -114,5 +122,6 @@ def display_value(n_intervals):
     return (
         fig1,
         fig2,
+        {},
         "Last Updated on: " + datetime.now().strftime("%m/%d/%Y,%H:%M:%S"),
     )
