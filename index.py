@@ -10,7 +10,7 @@ from app import app, server
 from apps import currency_tracker, error, price_predictor
 
 SIDEBAR_STYLE = {
-    "position": "fixed",
+    "position": "relative",
     "top": "8%",
     "left": "2rem",
     # "height": "15%",
@@ -36,13 +36,14 @@ app.layout = html.Div(
                             dbc.NavLink(
                                 "Stock Price Predictor",
                                 href="/apps/price_predictor",
-                                active=True,
+                                active="exact",
                             )
                         ),
                         dbc.NavItem(
                             dbc.NavLink(
                                 "Currency Tracker",
                                 href="/apps/currency_tracker",
+                                active="exact",
                             )
                         ),
                     ],
@@ -62,9 +63,9 @@ app.layout = html.Div(
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def display_page(pathname):
     print(pathname)
-    if pathname in ["/apps/price_predictor"]:
+    if pathname in ["/apps/price_predictor", "/"]:
         return price_predictor.layout
-    elif pathname in ["/apps/currency_tracker", "/"]:
+    elif pathname in ["/apps/currency_tracker"]:
         return currency_tracker.layout
     else:
         return error.layout

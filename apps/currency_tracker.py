@@ -37,7 +37,7 @@ layout = html.Div(
         dcc.Graph(id="map", figure={}),
         dcc.Graph(id="chart", figure={}),
         dcc.Interval(
-            id="interval-component", interval=600000, n_intervals=0  # in milliseconds
+            id="interval-component", interval=300000, n_intervals=0  # in milliseconds
         ),
     ]
 )
@@ -87,7 +87,7 @@ def display_value(n_intervals):
 
         df.loc[i]["Country"] = ticker.split("=")[0]
         df.loc[i]["Currency"] = (
-            0 if data.iloc[-2]["Close"] > data.iloc[-1]["Close"] else 1
+            "Down" if data.iloc[-2]["Close"] > data.iloc[-1]["Close"] else "Up"
         )
         df.loc[i]["name"] = COUNTRY[i]
 
@@ -111,4 +111,8 @@ def display_value(n_intervals):
 
     fig2 = px.line(bar_df, x="Datetime", y="Close", color="Country")
 
-    return fig1, fig2, datetime.now().strftime("%m/%d/%Y,%H:%M:%S")
+    return (
+        fig1,
+        fig2,
+        "Last Updated on: " + datetime.now().strftime("%m/%d/%Y,%H:%M:%S"),
+    )
