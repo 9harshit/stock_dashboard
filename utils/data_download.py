@@ -20,4 +20,4 @@ def data_download(ticker: str, interval: str):
     data = data.fillna(method="ffill").reset_index()
     data = data.drop_duplicates()
 
-    return data
+    return data.loc[:, ["Datetime", "Close"]]

@@ -1,6 +1,5 @@
 import pathlib
 from datetime import datetime
-from re import T
 
 import dash_core_components as dcc
 import dash_html_components as html
@@ -10,6 +9,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 
 from app import app
+from utils import get_prediction
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
@@ -34,8 +34,8 @@ layout = html.Div(
             dcc.RadioItems(
                 id="input-radio-button",
                 options=[
-                    {"label": "RNN", "value": "RNN"},
-                    {"label": "Bi-direction RNN", "value": "BRNN"},
+                    {"label": "Apple", "value": "AAPL"},
+                    {"label": "SBI", "value": "SBIN"},
                 ],
                 value="RNN",
                 labelStyle={"display": "inline-block"},
@@ -73,12 +73,13 @@ layout = html.Div(
 def display_value(n_intervals, radio_button_value):
 
     data = pd.read_csv(DATA_PATH.joinpath("apple_5_test.csv"))
+
+    """
+    data = get_prediction(ticker)
     fig = px.line(data, x="Datetime", y="Close")
 
-    # if radio_button_value == "BRNN":
-    #     regressor = load_model(MODEL_PATH.joinpath("biapple1.h5"))
-    # else:
-    #     regressor = load_model(MODEL_PATH.joinpath("apple1.h5"), compile=True)
+    """
+    fig = px.line(data, x="Datetime", y="Close")
 
     return (
         fig,

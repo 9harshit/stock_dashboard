@@ -17,5 +17,6 @@ def get_model(ticker):
     # load weights into new model
 
     regressor.load_weights(MODEL_PATH.joinpath(ticker + ".h5"))
+    regressor.compile(optimizer="adam", loss="mean_squared_error")
 
     return regressor
