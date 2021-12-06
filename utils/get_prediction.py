@@ -4,12 +4,6 @@ import joblib
 import numpy as np
 import pandas as pd
 
-<<<<<<< HEAD
-=======
-import joblib
-
->>>>>>> de36d8da9adf4385f05c2452145125a278cf23a6
-
 from utils.data_download import data_download
 from utils.get_model import get_model
 
