@@ -8,10 +8,8 @@ import pandas as pd
 import plotly.express as px
 from dash.dependencies import Input, Output
 
-from utils import data_download
-
 from app import app
-
+from utils import data_download
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent

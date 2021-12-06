@@ -12,6 +12,7 @@ Created on Mon Dec  6 11:02:29 2021
 
 import pathlib
 
+import joblib
 import matplotlib.pyplot as plt
 
 # Importing the libraries
@@ -25,8 +26,6 @@ from keras.models import Sequential
 from sklearn.preprocessing import MinMaxScaler
 
 from utils.data_download import data_download
-
-import joblib
 
 PATH = pathlib.Path('__file__').parent
 MODEL_PATH = PATH.joinpath("../models").resolve()
