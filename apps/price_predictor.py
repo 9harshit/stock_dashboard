@@ -54,7 +54,7 @@ layout = html.Div(
             },
         ),
         dcc.Interval(
-            id="interval-component", interval=600000, n_intervals=0  # in milliseconds
+            id="interval-component", interval=60000, n_intervals=0  # in milliseconds
         ),
     ]
 )
