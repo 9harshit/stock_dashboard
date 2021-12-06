@@ -2,7 +2,7 @@ import pathlib
 
 import numpy as np
 import pandas as pd
-from sklearn.externals import joblib
+import joblib
 
 from utils import data_download, get_model
 
