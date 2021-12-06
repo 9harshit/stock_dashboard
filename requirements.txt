@@ -12,3 +12,4 @@ dash==1.16.0
 yfinance
 requests
 sklearn
+tensorflow==1.15
