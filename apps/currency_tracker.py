@@ -6,11 +6,12 @@ import dash_html_components as html
 import geopandas as gpd
 import pandas as pd
 import plotly.express as px
-import yfinance as yf
 from dash.dependencies import Input, Output
 
-from app import app
 from utils import data_download
+
+from app import app
+
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
@@ -76,7 +77,7 @@ def display_value(n_intervals):
         ["AUD=X", "CAD=X", "EUR=X", "INR=X", "USD", "GBP=X", "RUB=X", "CNY=X"], 0
     ):
 
-        data = data_download.data_download(ticker, "5m")
+        data = data_download.data_download(ticker, "5m").iloc[::-1]
 
         data["Country"] = ticker.split("=")[0]
 
