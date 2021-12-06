@@ -9,7 +9,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 
 from app import app
-from utils import get_prediction
+from utils.get_prediction import get_prediction
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
@@ -35,9 +35,9 @@ layout = html.Div(
                 id="input-radio-button",
                 options=[
                     {"label": "Apple", "value": "AAPL"},
-                    {"label": "SBI", "value": "SBIN"},
+                    {"label": "SBI", "value": "SBIN.NS"},
                 ],
-                value="RNN",
+                value="AAPL",
                 labelStyle={"display": "inline-block"},
             )
         ),
@@ -72,14 +72,11 @@ layout = html.Div(
 )
 def display_value(n_intervals, radio_button_value):
 
-    data = pd.read_csv(DATA_PATH.joinpath("apple_5_test.csv"))
-
-    """
-    data = get_prediction(ticker)
-    fig = px.line(data, x="Datetime", y="Close")
-
-    """
-    fig = px.line(data, x="Datetime", y="Close")
+    # data = pd.read_csv(DATA_PATH.joinpath("apple_5_test.csv"))
+    print(radio_button_value)
+    data = get_prediction(radio_button_value)
+    print(data)
+    fig = px.line(data, x="Datetime", y="Price", color="Type")
 
     return (
         fig,

@@ -9,7 +9,7 @@ MODEL_PATH = PATH.joinpath("../models").resolve()
 def get_model(ticker):
 
     # load json and create model
-    json_file = open(MODEL_PATH.joinpath("regressor.json"), "r")
+    json_file = open(MODEL_PATH.joinpath("{}.json".format(ticker)), "r")
     loaded_model_json = json_file.read()
     json_file.close()
 
