@@ -10,3 +10,4 @@ plotly==4.10.0
 dash==1.16.0
 yfinance
 requests
+sklearn
